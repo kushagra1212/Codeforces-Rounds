@@ -1,0 +1,98 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define int  long long int
+#define nline "\n"
+#define FAST ios_base::sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL)
+#define deb(a) cerr<<#a<<" "<<a<<nline
+#define all(a) a.begin(),a.end()
+#define ctoi(c) (int)((int)c-'0')
+#define debv(v) cerr<<#v<<" => [ "; for(auto &vv:v){cerr<<vv<<" ";}cerr<<"]"<<nline
+#define deba(a,k,n) cerr<<#a<<" => [ "; for(int i=k;i<n;i++){cerr<<a[i]<<" ";}cerr<<"]"<<nline
+#define loop(i,s,e) for(int i=s;i<e;i++)
+#define itoc(i) (char)(i+'0')
+mt19937_64 RNG(chrono::steady_clock::now().time_since_epoch().count());
+
+class Solution {
+private:
+public:
+ 
+void solve(){
+   
+   int n; cin>>n;
+   int a[n],b[n];
+   for(int i=0;i<n;i++){
+           cin>>a[i]>>b[i];
+   }
+  
+   int damage[n];
+
+   for(int i=1;i<n;i++){
+        if(a[i]<=b[i-1]){
+                damage[i-1]=1;
+        }else{
+                damage[i-1]=0;
+        }
+   }
+   if(a[0]<=b[n-1]){
+           damage[n-1]=1;
+   }else{
+           damage[n-1]=0;
+   }
+   int sum=0;
+  
+   int temp[n];
+  for(int i=0;i<n;i++)
+  temp[i]=-1;
+   if(damage[n-1]==0){
+           temp[0]=a[0]-b[n-1];
+           sum+=temp[0];
+   }
+
+   for(int i=1;i<n;i++){
+           if(damage[i-1]==0){
+                   temp[i]=a[i]-b[i-1];
+                   sum+=temp[i];
+           }
+   }
+   int mini=INT64_MAX;
+
+   for(int i=0;i<n;i++){
+           int ans=sum;
+           if(temp[i]==-1){
+                ans+=a[i];
+           }else{
+                        ans+=a[i];
+                        ans-=temp[i];
+                
+           }
+
+           mini=min(mini,ans);
+   }
+   cout<<mini<<nline;
+ 
+
+
+  }
+};
+
+int32_t main()
+{
+  auto begin = std::chrono::high_resolution_clock::now();
+  FAST; Solution sol;
+  // #ifndef ONLINE_JUDGE
+  //  freopen("input.txt","r",stdin);
+  //  freopen("output.txt","w", stdout);
+  // #endif
+  int t;
+  t = 1; 
+  cin >> t;
+
+  while (t--)
+    sol.solve();
+
+ // auto end = std::chrono::high_resolution_clock::now();
+ // auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+ // cerr << "Time measured: " << elapsed.count() * 1e-9 << " seconds.\n";
+
+  return 0;
+}
